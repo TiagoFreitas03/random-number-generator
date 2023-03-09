@@ -26,12 +26,14 @@ export function Generator({ onGenerate }: GeneratorProps) {
 		}
 
 		const aux: number[] = []
+		const numbers = Array.from({ length: max - min + 1 }, (_, index) => min + index)
 
 		while (aux.length !== amount) {
-			const randomNumber = Math.floor(Math.random() * (max - min + 1)) + min
+			const pos = Math.floor(Math.random() * numbers.length)
+			const num = numbers[pos]
 
-			if (!aux.includes(randomNumber))
-				aux.push(randomNumber)
+			numbers.splice(pos, 1)
+			aux.push(num)
 		}
 
 		onGenerate(aux)
@@ -55,7 +57,7 @@ export function Generator({ onGenerate }: GeneratorProps) {
 
 				<div>
 					<label>Máximo: </label>
-					<Input value={max} onChange={e => setMax(Number(e.target.value))} min={1} max={1000000} />
+					<Input value={max} onChange={e => setMax(Number(e.target.value))} min={1} max={100000} />
 				</div>
 
 				<button type="submit">Sortear</button>
